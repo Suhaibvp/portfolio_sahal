@@ -43,6 +43,44 @@
     halo: slide.querySelector(".halo"),
   });
 
+  const acctCards = [...document.querySelectorAll(".acct")];
+  const acctName = document.getElementById("acctName");
+  const acctPrev = document.getElementById("acctPrev");
+  const acctNext = document.getElementById("acctNext");
+  let acct = 0;
+
+  const layoutAccounts = (animate) => {
+    if (!acctCards.length) return;
+    const gap = Math.min(250, Math.max(150, width() * 0.24));
+    acctCards.forEach((card, i) => {
+      const offset = i - acct;
+      const distance = Math.abs(offset);
+      gsap.to(card, {
+        x: offset * gap,
+        y: distance * 24,
+        z: -distance * 180,
+        rotateX: 26,
+        rotateY: Math.max(-48, Math.min(48, offset * -28)),
+        scale: Math.max(0.68, 1 - distance * 0.09),
+        autoAlpha: distance > 3 ? 0 : 1,
+        duration: animate && !reduce ? 0.7 : 0,
+        ease: "power3.out",
+        overwrite: true,
+      });
+      card.style.zIndex = String(40 - distance);
+    });
+    acctName.textContent = acctCards[acct].dataset.name || "";
+    acctPrev.disabled = acct === 0;
+    acctNext.disabled = acct === acctCards.length - 1;
+  };
+
+  const shiftAccount = (step) => {
+    const next = Math.max(0, Math.min(acctCards.length - 1, acct + step));
+    if (next === acct) return;
+    acct = next;
+    layoutAccounts(true);
+  };
+
   const reveal = (i, dir = 1) => {
     const slide = slides[i];
     const { chars, people, cards, bits, halo } = parts(slide);
@@ -50,6 +88,7 @@
 
     if (reduce) {
       gsap.set([chars, people, cards, bits, halo], { autoAlpha: 1, x: 0, y: 0, scale: 1 });
+      if (slide.classList.contains("slide-accounts")) layoutAccounts(false);
       return;
     }
 
@@ -138,6 +177,7 @@
         }
       );
     }
+    if (slide.classList.contains("slide-accounts")) layoutAccounts(true);
   };
 
   const streak = (dir) => {
@@ -223,9 +263,13 @@
 
   gsap.set(".mega, .hero-word", { autoAlpha: 1 });
   fitHero();
+  layoutAccounts(false);
   reveal(0, 1);
   paint();
   document.documentElement.classList.remove("is-booting");
+
+  acctPrev.addEventListener("click", () => shiftAccount(-1));
+  acctNext.addEventListener("click", () => shiftAccount(1));
 
   prev.addEventListener("click", () => go(index - 1));
   next.addEventListener("click", () => go(index + 1));
@@ -259,21 +303,24 @@
   let tracking = false;
   deck.addEventListener("pointerdown", (event) => {
     if (event.target.closest("a, button")) return;
-    tracking = true;
+    tracking = event.target.closest(".acct-stage") ? "accounts" : "deck";
     startX = event.clientX;
     startY = event.clientY;
   });
   deck.addEventListener("pointerup", (event) => {
     if (!tracking) return;
+    const mode = tracking;
     tracking = false;
     const dx = event.clientX - startX;
     const dy = event.clientY - startY;
     if (Math.abs(dx) < 56 || Math.abs(dx) < Math.abs(dy)) return;
-    go(index + (dx < 0 ? 1 : -1));
+    if (mode === "accounts") shiftAccount(dx < 0 ? 1 : -1);
+    else go(index + (dx < 0 ? 1 : -1));
   });
 
   window.addEventListener("resize", () => {
     fitHero();
+    layoutAccounts(false);
     gsap.set(track, { x: -index * width() });
   });
 })();

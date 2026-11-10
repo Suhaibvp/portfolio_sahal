@@ -234,8 +234,10 @@ html.is-booting .deck {
 .figure img {
   position: relative;
   z-index: 1;
-  height: min(86vh, 920px);
+  max-width: 100%;
   width: auto;
+  height: auto;
+  max-height: min(86vh, 920px);
   object-fit: contain;
   object-position: center bottom;
   filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.45));
@@ -254,16 +256,17 @@ html.is-booting .deck {
 }
 
 .figure-hero img {
-  max-width: none;
-  height: 94vh;
+  max-width: min(52vw, 640px);
+  max-height: 86vh;
   width: auto;
+  height: auto;
 }
 
 .halo {
   position: absolute;
   z-index: 0;
   left: 50%;
-  top: 30%;
+  top: 62%;
   width: min(58vh, 46vw);
   aspect-ratio: 1;
   border-radius: 50%;
@@ -413,8 +416,13 @@ html.is-booting .deck {
   gap: 18px;
   margin-top: 1.8vh;
   font-family: var(--display);
-  font-size: clamp(28px, 3vw, 48px);
-  letter-spacing: 0.04em;
+  font-size: clamp(22px, 2.4vw, 40px);
+  letter-spacing: 0.03em;
+}
+
+.works li span {
+  min-width: 0;
+  line-height: 0.9;
 }
 
 .works b {
@@ -446,7 +454,7 @@ html.is-booting .deck {
 }
 
 .figure-works img {
-  height: 46vh;
+  max-height: 46vh;
 }
 
 .figure-works .halo {
@@ -454,180 +462,161 @@ html.is-booting .deck {
   top: 16%;
 }
 
-/* ---------- Social ---------- */
+/* ---------- Experience ---------- */
 
-.social {
-  position: relative;
-  z-index: 1;
+.experience {
   display: grid;
-  grid-template-columns: 0.9fr 1.05fr 0.8fr;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr);
   align-items: center;
   height: 100%;
-  padding: 6vh 4vw 8vh;
-  gap: 3vw;
+  padding: 8vh 7vw 10vh;
+  gap: 4vw;
 }
 
-.windows {
+.roles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 3px solid var(--red);
+}
+
+.roles li {
   display: grid;
-  gap: 2.4vh;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: 28px;
+  padding: 3.2vh 0 3.2vh 28px;
 }
 
-.window {
-  overflow: hidden;
-  border-radius: 12px;
-  background: #161616;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+.roles li + li {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
-.window header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  background: #fff;
-  color: #222;
-  font-size: 11px;
+.roles em {
+  color: var(--red);
+  font-style: normal;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+}
+
+.roles strong {
+  display: block;
+  font-size: clamp(26px, 2.8vw, 42px);
+  letter-spacing: -0.03em;
+}
+
+.roles span {
+  display: block;
+  margin: 0.25em 0 0.55em;
+  font-size: 14px;
   font-weight: 700;
 }
 
-.window header i {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #bbb;
-}
-
-.window header i:first-child { background: #ff5f57; }
-.window header i:nth-child(2) { background: #febc2e; }
-.window header i:nth-child(3) { background: #28c840; }
-
-.window header span {
-  margin-left: 8px;
-}
-
-.window img {
-  width: 100%;
-  height: 18vh;
-  object-fit: cover;
-}
-
-.clients article + article {
-  margin-top: 3vh;
-}
-
-.clients h3 {
-  margin: 0 0 0.4em;
-  font-size: clamp(22px, 2vw, 32px);
-}
-
-.clients p {
+.roles p {
   margin: 0;
-  max-width: 42ch;
+  max-width: 54ch;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
-/* ---------- Branding + content ---------- */
+/* ---------- Managed accounts ---------- */
 
-.bento,
-.posters {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  width: min(1100px, 88vw);
-  margin: 0 auto;
-  padding: 0 4vw 6vh;
-}
-
-.tile,
-.posters figure {
-  position: relative;
-  margin: 0;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #141414;
-  min-height: 16vh;
-}
-
-.tile img,
-.posters img {
-  width: 100%;
-  height: 18vh;
-  object-fit: cover;
-}
-
-.tile.wide img {
-  height: 18vh;
-}
-
-.tile figcaption,
-.posters figcaption {
-  position: absolute;
-  left: 8px;
-  bottom: 8px;
-  padding: 3px 7px;
-  background: rgba(0, 0, 0, 0.72);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.tile.stat {
+.accounts {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 14px;
-  background: #111;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  height: 100%;
+  padding: 5vh 4vw 8vh;
 }
 
-.tile.stat b {
-  font-family: var(--display);
-  font-size: clamp(36px, 4vw, 64px);
-  font-weight: 400;
-  color: var(--red);
-  line-height: 0.85;
-  transform: skewX(-8deg);
-}
-
-.tile.stat span {
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.content-head {
+.accounts-head {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  width: min(1100px, 88vw);
-  margin: 5vh auto 2vh;
-  padding: 0 4vw;
+  z-index: 2;
 }
 
-.content-head p {
-  margin: 0 0 0.6em;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+.accounts-head p {
+  margin: 0 0 0.7em;
+  color: var(--ink);
+  font-size: clamp(14px, 1.4vw, 18px);
+  font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.posters {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+.acct-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  perspective: 1400px;
+  perspective-origin: 50% 80%;
+  overflow: hidden;
 }
 
-.posters img {
-  height: 24vh;
+.acct-stage::before {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 7%;
+  height: 16%;
+  background: radial-gradient(ellipse at center, rgba(255, 30, 30, 0.38), transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
 }
+
+.acct {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  width: min(230px, 24vw);
+  margin: 0;
+  transform-origin: center bottom;
+  transform-style: preserve-3d;
+}
+
+.acct img {
+  width: 100%;
+  height: auto;
+  max-height: 56vh;
+  object-fit: contain;
+  border-radius: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 28px 40px rgba(0, 0, 0, 0.55);
+  background: #0c0c0c;
+}
+
+.acct-nav {
+  position: absolute;
+  z-index: 5;
+  top: 42%;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  cursor: pointer;
+}
+
+.acct-nav svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.acct-prev { left: 2vw; }
+.acct-next { right: 2vw; }
 
 /* ---------- Connect ---------- */
 
@@ -736,10 +725,16 @@ html.is-booting .deck {
 @media (max-width: 700px) {
   .split,
   .split-flip,
-  .social {
+  .experience,
+  .accounts-head {
     grid-template-columns: 1fr;
     align-content: center;
     padding-top: 8vh;
+  }
+
+  .roles li {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .figure,
@@ -765,22 +760,18 @@ html.is-booting .deck {
     height: 86vh;
   }
 
-  .bento,
-  .posters,
-  .content-head {
-    width: 92vw;
-    padding-left: 0;
-    padding-right: 0;
+  .accounts-head {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 0;
   }
 
-  .bento,
-  .posters {
-    grid-template-columns: 1fr 1fr;
+  .acct {
+    width: min(180px, 46vw);
   }
 
-  .posters img,
-  .tile img {
-    height: 14vh;
+  .acct img {
+    max-height: 48vh;
   }
 
   .polaroids {
